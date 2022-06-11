@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) => {
 
     res.status(200).json(person);
   }catch(err){
-    res.status(500).json({ messagem: err.message })
+    res.status(500).json({ message: err.message })
   }
 })
 
@@ -55,9 +55,9 @@ router.patch('/:id', async (req, res) => {
 
   try{
     await Person.updateOne({ _id: id }, person);
-    res.status(200).json({ messagem: 'Person has been updated with success' });
+    res.status(200).json({ message: 'Person has been updated with success' });
   }catch(err){
-    res.status(500).json({ messagem: err.message })
+    res.status(500).json({ message: err.message })
   }
 })
 
@@ -66,9 +66,9 @@ router.delete('/:id', async (req, res) => {
   
   try{
     await Person.deleteOne({ _id: id});
-    res.status(200).json({ messagem: 'Person has been deleted with success' });
+    res.status(200).json({ message: 'Person has been deleted with success' });
   }catch (err){
-    res.status(500).json({ messagem: err.message })
+    res.status(500).json({ message: err.message })
   }
 })
 

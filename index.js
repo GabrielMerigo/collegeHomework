@@ -9,8 +9,17 @@ app.use(express.json());
 app.use('/person', personRoutes);
 
 app.get('/', (req, res) => {
-  res.json({ message: 'oi Express!'});
+  res.json({ message: 'Hi Express!'});
 });
+
+app.post('/auth/register', async (req, res) => {
+  const { name, email, password, confirmPassword } = req.body;
+
+  if(!name || !email || !password || !confirmPassword){
+    return res.status(422).json({ message: 'The name, email, password and confirmPassword are required' });
+  }
+
+})
 
 mongoose.connect(`mongodb+srv://gabriel:${process.env.PASSWORDMONGODB}@apicluster.knjgws6.mongodb.net/?retryWrites=true&w=majority`)
   .then(res => {
