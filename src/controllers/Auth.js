@@ -1,9 +1,25 @@
-const User = require('../../models/User');
+const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const jwt = require("jsonwebtoken");
-const router = require('express').Router();
+const jwt = require('jsonwebtoken');
 
-router.post('/signup', async (req, res) => {
+const checkToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if(!token){
+    return res.status(401).json({ message: 'Access denied!' });
+  }
+
+  try{
+    const secret = process.env.SECRET;
+    jwt.verify(token, secret);
+    next();
+  }catch(err){
+    res.status(400).json({ message: 'Invalid Token!' })
+  }
+};
+
+const signUp = async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
   const userExists = await User.findOne({ email });
   const salt = await bcrypt.genSalt(12);
@@ -28,9 +44,9 @@ router.post('/signup', async (req, res) => {
   }catch(err){
     return res.status(500).json({ message: err })
   }
-})
+}
 
-router.post('/signin', async (req, res) => {
+const signIn = async (req, res) => {
   const { email, password } = req.body;
   const userExists = await User.findOne({ email });
   const checkPassword = await bcrypt.compare(password, userExists.password);
@@ -59,6 +75,10 @@ router.post('/signin', async (req, res) => {
       msg: 'It has happened an error, try again!'
     })
   }
-});
+}
 
-module.exports = router;
+module.exports = {
+  signUp,
+  signIn,
+  checkToken
+}
