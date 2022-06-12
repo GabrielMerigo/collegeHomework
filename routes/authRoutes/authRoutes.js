@@ -20,11 +20,11 @@ router.post('/signup', async (req, res) => {
  
   if(userExists){
     return res.status(422).json({ message: 'You need to use another email.'});
-  }
+  } 
 
   try{
     await user.save();
-    res.status(201).json({ message: 'User has been created with success' })
+    return res.status(201).json({ message: 'User has been created with success' });
   }catch(err){
     return res.status(500).json({ message: err })
   }
@@ -55,7 +55,6 @@ router.post('/signin', async (req, res) => {
 
     return res.status(200).json({ message: 'You have just been authenticated.', token })
   }catch(err){
-    console.log(err);
     res.status(500).json({
       msg: 'It has happened an error, try again!'
     })
