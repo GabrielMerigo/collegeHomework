@@ -37,7 +37,7 @@ router.post('/product', checkToken, async (req, res) => {
   }
 })
 
-router.get('product/:id', checkToken, async (req, res) => {
+router.get('/product/:id', checkToken, async (req, res) => {
   const id = req.params.id;
   try{
     const product = await Product.findOne({ _id: id });
@@ -52,7 +52,7 @@ router.get('product/:id', checkToken, async (req, res) => {
   }
 })
 
-router.patch('product/:id', checkToken, async (req, res) => {
+router.patch('/product/:id', checkToken, async (req, res) => {
   const id = req.params.id;
   const { name, price, hasInStorage } = req.body;
   const product = { name, price, hasInStorage };
@@ -70,7 +70,7 @@ router.patch('product/:id', checkToken, async (req, res) => {
   }
 })
 
-router.delete('product/:id', checkToken, async (req, res) => {
+router.delete('/product/:id', checkToken, async (req, res) => {
   const id = req.params.id;
   
   try{
