@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const personRoutes = require('./routes/personRoutes');
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -43,6 +44,16 @@ app.post('/auth/signup', async (req, res) => {
   }
 })
 
+
+const checkToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if(!token){
+    
+  }
+}
+
 app.post('/auth/signin', async (req, res) => {
   const { email, password } = req.body;
   const userExists = await User.findOne({ email });
@@ -60,6 +71,20 @@ app.post('/auth/signin', async (req, res) => {
     return res.status(422).json({ message: 'Invalid Password!'});
   }
 
+  try{
+    const secret = process.env.SECRET;
+    console.log(userExists._id)
+    const token = jwt.sign({
+      id: userExists._id
+    }, secret)
+
+    return res.status(200).json({ message: 'You have just been authenticated.', token })
+  }catch(err){
+    console.log(err);
+    res.status(500).json({
+      msg: 'It has happened an error, try again!'
+    })
+  }
 })
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@apicluster.knjgws6.mongodb.net/?retryWrites=true&w=majority`)
