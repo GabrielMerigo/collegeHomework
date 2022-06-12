@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const productRoutes = require('./routes/productsRoutes');
-const authRoutes = require('./routes/authRoutes');
+const productRoutes = require('./routes/productsRoutes/productsRoutes');
+const authRoutes = require('./routes/authRoutes/authRoutes');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
