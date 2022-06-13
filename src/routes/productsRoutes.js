@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const controllerProduct = require('../../controllers/Product');
-const controllerAuth = require('../../controllers/Auth');
+const controllerProduct = require('../controllers/Product');
+const controllerAuth = require('../controllers/Auth');
 
 router.post('/product', controllerAuth.checkToken, controllerProduct.createProduct);
 router.get('/product/:id', controllerAuth.checkToken, controllerProduct.getProductById)
