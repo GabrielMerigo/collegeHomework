@@ -16,6 +16,4 @@ app.get('/', (req, res) => {
   res.json({ message: 'Hi, Express!'});
 });
 
-
-
 module.exports = app;
