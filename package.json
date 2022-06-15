@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon ./index.js localhost 3000"
+    "start": "node index"
   },
   "keywords": [],
   "author": "",
