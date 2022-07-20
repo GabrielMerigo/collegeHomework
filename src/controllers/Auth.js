@@ -7,7 +7,6 @@ const checkToken = (req, res, next) => {
   const token = authHeader && authHeader.split(' ')[1]
 
   if (!token) {
-    console.log('negado')
     return res.status(401).json({ message: 'Access denied!' })
   }
 
@@ -28,11 +27,9 @@ const signUp = async (req, res) => {
   const user = new User({ name, email, password: passwordHash })
 
   if (!name || !email || !password || !confirmPassword) {
-    return res
-      .status(422)
-      .json({
-        message: 'The name, email, password and confirmPassword are required'
-      })
+    return res.status(422).json({
+      message: 'The name, email, password and confirmPassword are required'
+    })
   }
 
   if (password !== confirmPassword) {
