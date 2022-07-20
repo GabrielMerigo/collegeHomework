@@ -50,14 +50,14 @@ const getStoreById = async (req, res) => {
 
     res.status(200).json(store);
   }catch(err){
-    res.status(500).json({ message: err.message })
+    res.status(500).json({ message: err.message });
   }
 }
 
 const createStore = async (req, res) => {
   const { location, numberAddres, district, peoplePerDay, isRent } = req.body;
   
-  if(!location || !numberAddres || !district || !peoplePerDay || !!isRent){
+  if(!location || !numberAddres || !district || !peoplePerDay || isRent === undefined){
     return res.status(422).json({ error: 'The fields location, numberAddres, district, peoplePerDay and isRent are required.' });
   }
 
